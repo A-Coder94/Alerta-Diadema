@@ -18,7 +18,7 @@ const App = () => {
   // FUNÇÃO PARA BUSCAR DADOS REAIS DO BACKEND
   const fetchStats = async () => {
     try {
-      const response = await fetch('http://localhost:3000/api/ocorrencias');
+      const response = await fetch('https://alerta-diadema-production.up.railway.app/api/ocorrencias');
       const data = await response.json();
 
       // Lógica simples para contar ocorrências por bairro
@@ -49,7 +49,7 @@ const App = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:3000/api/ocorrencias', {
+      const response = await fetch('https://alerta-diadema-production.up.railway.app/api/ocorrencias', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
