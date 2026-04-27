@@ -32,6 +32,9 @@ const Ocorrencia = mongoose.model('Ocorrencia', OcorrenciaSchema);
 // 3. ROTAS
 
 // Rota de Teste
+app.get('/', (req, res) => {
+  res.send('Servidor Alerta Diadema está Online!');
+});
 app.get('/health', (req, res) => {
   res.status(200).json({ status: "ok" });
 });
