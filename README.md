@@ -1,7 +1,8 @@
 # 🛡️ Alerta Diadema
 
-`![Screenshot do App](./print-app-p.png)`
-`![Screenshot do App](./print-app-m.png)`
+| Versão Desktop | Versão Mobile |
+| --- | --- |
+| <img src="./print-app-p.png" width="500" alt="Alerta Diadema PC"> | <img src="./print-app-m.png" width="180" alt="Alerta Diadema Mobile"> |
 
 O **Alerta Diadema** é uma plataforma de monitoramento comunitário e segurança colaborativa. O projeto nasceu da necessidade de centralizar informações sobre ocorrências nos bairros de Diadema, permitindo que moradores reportem eventos e visualizem alertas em tempo real para aumentar a segurança de todos.
 
