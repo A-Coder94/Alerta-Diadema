@@ -23,7 +23,7 @@ const App = () => {
   });
 
   // URL da API na Railway
-  const API_URL = 'https://alerta-diadema-production.up.railway.app/ocorrencias';
+  const API_URL = 'https://alerta-diadema-production.up.railway.app/api/ocorrencias';
 
   // FUNÇÃO PARA BUSCAR DADOS REAIS DO BACKEND
   const fetchStats = async () => {
