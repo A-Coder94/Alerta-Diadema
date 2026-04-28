@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import logoImg from './assets/logo.png';
 
 const App = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -11,7 +12,7 @@ const App = () => {
     "Serraria", "Taboão", "Vila Nogueira"
   ];
 
-  const tiposOcorrencia = ["Atividade Suspeita", "Assalto", "Furto", "Assédio", "Vandalismo", "Briga", "Tráfico de drogas", "Outros"];
+  const tiposOcorrencia = ["Atividade Suspeita", "Assalto", "Furto", "Assédio", "Vandalismo", "Briga", "Tráfico de drogas", "Ameaça", "Sequestro", "Outro.."];
 
   // Inicializa o dashboard com todos os bairros zerados
   const [stats, setStats] = useState(
@@ -106,20 +107,19 @@ const App = () => {
 
   return (
     <div className="min-h-screen p-4 pb-32 max-w-lg mx-auto relative text-white bg-black font-sans selection:bg-cyan-500/30">
-      
-      {/* HEADER */}
-      <header className="flex items-center justify-between mb-8 pt-4">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-cyan-500 rounded-br-2xl flex items-center justify-center shadow-[0_0_15px_rgba(0,242,255,0.4)]">
-            <span className="text-black font-black text-xl">D</span>
-          </div>
-          <div>
-            <h1 className="text-xl font-black tracking-widest italic">ALERTA <span className="text-cyan-500">DIADEMA</span></h1>
-            <p className="text-[9px] text-gray-500 tracking-[0.2em] font-bold">MONITORAMENTO POPULAR</p>
-          </div>
-        </div>
-      </header>
+    <header className="flex items-center justify-center mb-8 pt-4">
+  <div className="flex items-center justify-center w-full">
+    <img 
+      src={logoImg} 
+      alt="Logo Alerta Diadema" 
+      className="h-16 md:h-20 w-auto object-contain drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]" 
+    />
+  </div>
+</header>
+     
 
+      
+      
       {/* DASHBOARD DINÂMICO */}
       <section className="bg-gray-900/40 border border-white/5 rounded-2xl p-6 mb-8 backdrop-blur-sm">
         <h2 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-6 flex justify-between items-center">
