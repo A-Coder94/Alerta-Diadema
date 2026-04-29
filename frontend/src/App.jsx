@@ -112,7 +112,7 @@ const App = () => {
     <img 
       src={logoImg} 
       alt="Logo Alerta Diadema" 
-      className="h-16 md:h-20 w-auto object-contain drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]" 
+      className="h-22 md:h-20 w-auto object-contain drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]" 
     />
   </div>
 </header>
