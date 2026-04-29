@@ -107,12 +107,12 @@ const App = () => {
 
   return (
     <div className="min-h-screen p-4 pb-32 max-w-lg mx-auto relative text-white bg-black font-sans selection:bg-cyan-500/30">
-    <header className="flex items-center justify-center mb-8 pt-4">
+    <header className="flex items-center justify-center mb-10 pt-8">
   <div className="flex items-center justify-center w-full">
     <img 
       src={logoImg} 
       alt="Logo Alerta Diadema" 
-      className="h-22 md:h-20 w-auto object-contain drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]" 
+     className="h-28 md:h-24 w-auto object-contain drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]"
     />
   </div>
 </header>
