@@ -4,7 +4,8 @@ import logoImg from './assets/logo.png';
 const App = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-
+  const [bairroAberto, setBairroAberto] = useState(null);
+  
   // Lista oficial de bairros de Diadema
   const bairrosDiadema = [
     "Campanário", "Canhema", "Casa Grande", "Centro", 
@@ -117,10 +118,8 @@ const App = () => {
   </div>
 </header>
      
-
       
-      
-      {/* DASHBOARD DINÂMICO */}
+      {/* DASHBOARD DINÂMICO COM EXPANSÃO POR CLIQUE */}
       <section className="bg-gray-900/40 border border-white/5 rounded-2xl p-6 mb-8 backdrop-blur-sm">
         <h2 className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-6 flex justify-between items-center">
           <span>Relatório de Bairros</span>
@@ -129,24 +128,67 @@ const App = () => {
             <span className="text-cyan-500 animate-pulse">● Live</span>
           </span>
         </h2>
-        <div className="space-y-6 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
-          {stats.map((item) => (
-            <div key={item.nome} className="group">
-              <div className="flex justify-between items-end mb-2">
-                <span className="text-sm font-bold group-hover:text-cyan-400 transition-colors">{item.nome}</span>
-                <span className="text-xs text-cyan-400 font-mono">{item.qtd} alertas</span>
+
+        <div className="space-y-4 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
+          {stats.map((item) => {
+            // Verifica se este bairro é o que deve estar aberto
+            const isOpen = typeof bairroAberto !== 'undefined' && bairroAberto === item.nome;
+
+            return (
+              <div key={item.nome} className="border-b border-white/5 pb-4 last:border-0">
+                {/* Cabeçalho Clicável */}
+                <button 
+                  onClick={() => setBairroAberto(isOpen ? null : item.nome)}
+                  className="w-full text-left focus:outline-none group"
+                >
+                  <div className="flex justify-between items-end mb-2">
+                    <span className={`text-sm font-bold transition-colors ${isOpen ? 'text-cyan-400' : 'group-hover:text-cyan-400'}`}>
+                      {item.nome}
+                      <span className="ml-2 text-[10px] opacity-40">
+                        {isOpen ? '▼' : '▶'}
+                      </span>
+                    </span>
+                    <span className="text-xs text-cyan-400 font-mono">{item.qtd} alertas</span>
+                  </div>
+                  
+                  {/* Barra de Progresso */}
+                  <div className="h-1.5 w-full bg-gray-950 rounded-full overflow-hidden">
+                    <div 
+                      className={`h-full ${item.cor} transition-all duration-1000 ease-out`} 
+                      style={{ width: `${Math.min((item.qtd / 10) * 100, 100)}%` }}
+                    ></div>
+                  </div>
+                </button>
+
+                {/* Lista de Ocorrências (Acordeão) */}
+                {isOpen && (
+                  <div className="mt-4 ml-2 p-3 bg-cyan-950/20 border-l-2 border-cyan-500/50 rounded-r-lg">
+                    <h4 className="text-[9px] text-gray-500 uppercase font-bold mb-2 tracking-tighter">Tipos de Ocorrência:</h4>
+                    <div className="space-y-2">
+                      {item.detalhes && Object.keys(item.detalhes).length > 0 ? (
+                        Object.entries(item.detalhes).map(([crime, quantidade]) => (
+                          <div key={crime} className="flex justify-between items-center text-[11px]">
+                            <span className="text-gray-300">{crime}</span>
+                            <span className="text-cyan-400 font-mono font-bold bg-cyan-900/40 px-2 py-0.5 rounded">
+                              {quantidade}
+                            </span>
+                          </div>
+                        ))
+                      ) : (
+                        <div className="text-[10px] text-gray-500 italic">Aguardando detalhes do sistema...</div>
+                      )}
+                    </div>
+                  </div>
+                )}
               </div>
-              <div className="h-1.5 w-full bg-gray-950 rounded-full overflow-hidden">
-                <div 
-                  className={`h-full ${item.cor} transition-all duration-1000 ease-out`} 
-                  style={{ width: `${Math.min((item.qtd / 10) * 100, 100)}%` }}
-                ></div>
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </section>
 
+
+
+    
       {/* BOTÃO DE AÇÃO */}
       <button 
         onClick={() => setIsModalOpen(true)} 
