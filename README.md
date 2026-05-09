@@ -8,7 +8,7 @@ O **Alerta Diadema** é uma plataforma de monitoramento comunitário e seguranç
 
 ## 🚀 Status do Projeto
 > **✅ Online e Operacional:** Integração Full Stack.
-> **🔗 Link do App:** https://alerta-diadema-cuzu.vercel.app/
+> **🔗 Link do App:** https://alerta-diadema.vercel.app/
 
 ---
 
