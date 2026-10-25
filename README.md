@@ -2,7 +2,7 @@
 
 Aplicativo comunitário para registrar e consultar alertas recentes por bairro em Diadema. O frontend React/Vite e a API Express são executados no mesmo computador; o backend serve os arquivos compilados e guarda os registros em SQLite.
 
-## Requisitos
+## Requisitos 
 
 - Node.js 20.19 ou superior (ou 22.12 ou superior)
 - npm
