@@ -1,74 +1,71 @@
-# 🛡️ Alerta Diadema
+# Alerta Diadema
 
-| Versão Desktop | Versão Mobile |
-| --- | --- |
-| <img src="./print-app-p.png" width="500" alt="Alerta Diadema PC"> | <img src="./print-app-m.png" width="180" alt="Alerta Diadema Mobile"> |
+Aplicativo comunitário para registrar e consultar alertas recentes por bairro em Diadema. O frontend React/Vite e a API Express são executados no mesmo computador; o backend serve os arquivos compilados e guarda os registros em SQLite.
 
-O **Alerta Diadema** é uma plataforma de monitoramento comunitário e segurança colaborativa. O projeto nasceu da necessidade de centralizar informações sobre ocorrências nos bairros de Diadema, permitindo que moradores reportem eventos e visualizem alertas em tempo real para aumentar a segurança de todos.
+## Requisitos
 
-## 🚀 Status do Projeto
-> **✅ Online e Operacional:** Integração Full Stack.
-> **🔗 Link do App:** https://alerta-diadema.vercel.app/
+- Node.js 20.19 ou superior (ou 22.12 ou superior)
+- npm
+- Para acesso público sem encaminhar portas no roteador: `cloudflared`
 
----
+## Instalação e execução local
 
-## 💻 Sobre o Projeto
+No PowerShell, se a política do Windows bloquear `npm`, use `npm.cmd` no lugar de `npm`:
 
-O sistema funciona como um mapa interativo e social, onde a informação flui da comunidade para a comunidade. Desenvolvido com foco em alta performance e interface intuitiva (Mobile First).
+```powershell
+npm.cmd install --prefix frontend
+npm.cmd install --prefix backend
+npm.cmd run build
+npm.cmd start
+```
 
-### Principais Funcionalidades:
-* **Relatório de Bairros:** Monitoramento das últimas 48h de atividade em bairros como Canhema, Campanário, Centro, Eldorado, Inamar, entre outros.
-* **Registro de Ocorrências:** Interface simplificada para reportar assaltos, furtos ou atividades suspeitas com apenas alguns cliques.
-* **Painel de Emergência:** Acesso rápido aos contatos da Polícia, SAMU e Bombeiros.
-* **Atualização em Tempo Real:** Sincronização imediata entre o envio do formulário e a exibição no mapa/lista.
+Abra `http://127.0.0.1:3001`. A API e o site são servidos pelo mesmo processo. O banco é criado automaticamente em `backend/data/alerts.sqlite`; os alertas ficam disponíveis na lista por 48 horas e são removidos após 15 dias.
 
----
+### Desenvolvimento
 
-## 🛠️ Tecnologias Utilizadas
+Inicie cada processo em um terminal separado:
 
-### **Frontend (Hospedado na Vercel)**
-* **React.js + Vite:** Interface rápida e modular.
-* **Tailwind CSS:** Design moderno com foco em "Dark Mode" e responsividade.
+```powershell
+npm.cmd run dev:backend
+npm.cmd run dev:frontend
+```
 
-### **Backend (Hospedado na Railway)**
-* **Node.js & Express:** API REST para gerenciamento de dados.
-* **MongoDB:** Armazenamento persistente de ocorrências e logs.
+O Vite abre o frontend em `http://localhost:5173` e encaminha as chamadas `/api` para o backend na porta 3001.
 
----
+### Testes
 
-## 📈 Evolução Técnica (Solução de Problemas)
+```powershell
+npm.cmd test
+```
 
-Este projeto demonstra a capacidade de resolver problemas reais de infraestrutura e deploy, como:
-- **Arquitetura Monorepo:** Organização de subpastas para Frontend e Backend em um único repositório.
-- **Configuração de CI/CD:** Automação de builds na Vercel com ajuste de caminhos relativos e diretórios raiz.
-- **Integração entre Clouds:** Conexão segura entre serviços hospedados em plataformas distintas (Vercel ↔ Railway).
+## Acesso pela internet sem abrir portas
 
----
+O backend escuta somente em `127.0.0.1`, portanto não fica diretamente acessível pela rede. Para compartilhar o app pela internet, use um túnel de saída. Com o app compilado e rodando, abra outro terminal e execute:
 
-## 🔧 Como testar localmente
+```powershell
+cloudflared tunnel --url http://127.0.0.1:3001
+```
 
-1. Clone o repositório:
-   ```bash
-   git clone [https://github.com/A-Coder94/Alerta-Diadema.git](https://github.com/A-Coder94/Alerta-Diadema.git)
-Configure o Frontend:
+O Cloudflare Tunnel Quick Tunnel exibirá um endereço HTTPS aleatório `*.trycloudflare.com`. Compartilhe esse endereço. Não é necessário abrir portas no roteador. Qualquer pessoa com o endereço poderá visualizar os alertas e enviar novos; não compartilhe o endereço se não quiser acesso público.
 
-Bash
-cd frontend
-npm install
-npm run dev
-Configure o Backend:
+O Quick Tunnel é temporário: o endereço muda ao reiniciar o túnel e o acesso depende de o PC, o backend e o processo `cloudflared` permanecerem ligados. Para um endereço estável, é necessário configurar um túnel nomeado no Cloudflare e usar um domínio próprio; o domínio não faz parte do Quick Tunnel.
 
-Bash
-cd backend
-npm install
-npm start
-👤 Autor
-Anderson de Souza Costa Junior
+## Configuração
 
-🎓 Estudante de Análise e Desenvolvimento de Sistemas (ADS).
+Copie `backend/.env.example` para `backend/.env` se precisar alterar a porta ou o caminho do banco. Por exemplo:
 
-📍 Diadema, SP.
+```dotenv
+PORT=3001
+DATABASE_PATH=./data/alerts.sqlite
+```
 
-GitHub
+Se alterar a porta, use a mesma porta no comando do túnel. Faça cópias de segurança periódicas do banco local. Ele não é replicado para outro computador nem para a nuvem.
 
-Este é um projeto de portfólio focado em demonstrar competências em desenvolvimento Full Stack e resolução de problemas complexos de deploy.
+## Proteções e limitações
+
+- O backend valida bairro, tipo, tamanhos dos campos e formato JSON.
+- Limites de requisição reduzem spam básico: até 10 envios de alerta por IP a cada 15 minutos, além de um limite geral da API. Os contadores são mantidos em memória e reiniciam quando o backend reinicia.
+- Os envios são anônimos e públicos; esses limites não substituem moderação, CAPTCHA ou autenticação. Para uma divulgação ampla, considere adicionar essas medidas.
+- Os dados são armazenados somente neste PC. Se ele desligar, reiniciar ou perder a conexão, o site ficará indisponível até o backend e o túnel voltarem.
+- A localização por GPS e a conversão para nome de rua dependem da permissão do navegador, de HTTPS e do serviço público Nominatim.
+- O banco local começa vazio. Os registros da antiga hospedagem Railway não são importados.
