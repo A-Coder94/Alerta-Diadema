@@ -50,16 +50,6 @@ O Cloudflare Tunnel Quick Tunnel exibirá um endereço HTTPS aleatório `*.trycl
 
 O Quick Tunnel é temporário: o endereço muda ao reiniciar o túnel e o acesso depende de o PC, o backend e o processo `cloudflared` permanecerem ligados. Para um endereço estável, é necessário configurar um túnel nomeado no Cloudflare e usar um domínio próprio; o domínio não faz parte do Quick Tunnel.
 
-## Configuração
-
-Copie `backend/.env.example` para `backend/.env` se precisar alterar a porta ou o caminho do banco. Por exemplo:
-
-```dotenv
-PORT=3001
-DATABASE_PATH=./data/alerts.sqlite
-```
-
-Se alterar a porta, use a mesma porta no comando do túnel. Faça cópias de segurança periódicas do banco local. Ele não é replicado para outro computador nem para a nuvem.
 
 ## Proteções e limitações
 
