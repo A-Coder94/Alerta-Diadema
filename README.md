@@ -30,27 +30,6 @@ npm.cmd run dev:backend
 npm.cmd run dev:frontend
 ```
 
-O Vite abre o frontend em `http://localhost:5173` e encaminha as chamadas `/api` para o backend na porta 3001.
-
-### Testes
-
-```powershell
-npm.cmd test
-```
-
-## Acesso pela internet sem abrir portas
-
-O backend escuta somente em `127.0.0.1`, portanto não fica diretamente acessível pela rede. Para compartilhar o app pela internet, use um túnel de saída. Com o app compilado e rodando, abra outro terminal e execute:
-
-```powershell
-cloudflared tunnel --url http://127.0.0.1:3001
-```
-
-O Cloudflare Tunnel Quick Tunnel exibirá um endereço HTTPS aleatório `*.trycloudflare.com`. Compartilhe esse endereço. Não é necessário abrir portas no roteador. Qualquer pessoa com o endereço poderá visualizar os alertas e enviar novos; não compartilhe o endereço se não quiser acesso público.
-
-O Quick Tunnel é temporário: o endereço muda ao reiniciar o túnel e o acesso depende de o PC, o backend e o processo `cloudflared` permanecerem ligados. Para um endereço estável, é necessário configurar um túnel nomeado no Cloudflare e usar um domínio próprio; o domínio não faz parte do Quick Tunnel.
-
-
 ## Proteções e limitações
 
 - O backend valida bairro, tipo, tamanhos dos campos e formato JSON.
